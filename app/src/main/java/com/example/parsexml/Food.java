@@ -1,10 +1,12 @@
 package com.example.parsexml;
 
-//всё что мы знаем о блюде
+// класс для всей информации о блюде
 
-public class FoodItem {
+public class Food {
     private String name;
     private String price;
+    private String calories;
+
 
 
     public String getName() {
@@ -21,5 +23,13 @@ public class FoodItem {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getCalories() {
+        return calories;
+    }
+
+    public void setCalories(String calories) {
+        this.calories = calories;
     }
 }
