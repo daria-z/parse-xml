@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Parse XML</string>
+    <string name="app_name">Foods List From Xml</string>
+    <string name="file_read_error">Не удалось загрузить данные</string>
 </resources>

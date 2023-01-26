@@ -1,59 +1,37 @@
 package com.example.parsexml;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    private String KEY_NAME = "name";
-    private String KEY_COAST = "price";
-    private String curText;
 
-    private static final String TAG = "MainActivity";
-
-    @Override    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
+        ArrayList<Food> foodsList;
         try {
             XmlPullParser xpp = getResources().getXml(R.xml.foods);
-            int eventType = xpp.getEventType();
+            FoodParser foodParser = new FoodParser(xpp);
+            foodsList = foodParser.getFoodsList();
 
+            com.example.parsexml.FoodAdapter adapter = new com.example.parsexml.FoodAdapter(this, foodsList);
+            ListView listView = findViewById(R.id.foods_list);
+            listView.setAdapter(adapter);
 
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                String tagname = xpp.getName();
-
-                switch (eventType) {
-                    case XmlPullParser.START_TAG:
-                        if (tagname.equalsIgnoreCase(KEY_NAME)) {
-                            Log.v(TAG, "Start tag " + xpp.getName());
-                        }
-                        break;
-                    case XmlPullParser.TEXT:
-                        curText = xpp.getText();
-                        break;
-                    case XmlPullParser.END_TAG:
-                        if (tagname.equalsIgnoreCase(KEY_NAME)) {
-                            Log.v(TAG, curText);
-                        } else if (tagname.equalsIgnoreCase(KEY_COAST)) {
-                            Log.v(TAG, curText);
-                        }
-                        break;
-                }
-
-                eventType = xpp.next();
-            }
-
-            Log.v(TAG, "End document");
-        }
-        catch (Throwable t) {
-            Toast.makeText(this,
-                            "Ошибка при загрузке XML-документа: " + t, Toast.LENGTH_SHORT)
-                    .show();
+        } catch (XmlPullParserException | IOException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.file_read_error), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 }
