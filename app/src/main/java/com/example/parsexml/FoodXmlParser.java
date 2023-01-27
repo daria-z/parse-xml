@@ -29,6 +29,7 @@ public class FoodXmlParser {
                 String tagname = xpp.getName();
 
                 String KEY_NAME = "name";
+                String KEY_CALORIES = "calories";
                 String KEY_COAST = "price";
                 switch (eventType) {
                     case XmlPullParser.START_TAG:
@@ -45,10 +46,10 @@ public class FoodXmlParser {
                         if (tagname.equalsIgnoreCase(KEY_FOOD)) {
                             foods.add(curFood);
                         } else if (tagname.equalsIgnoreCase(KEY_NAME)) {
-                            assert curFood != null;
                             curFood.setName(curText);
+                        } else if (tagname.equalsIgnoreCase(KEY_CALORIES)) {
+                            curFood.setCalories(curText);
                         } else if (tagname.equalsIgnoreCase(KEY_COAST)) {
-                            assert curFood != null;
                             curFood.setPrice(curText);
                         }
                         break;

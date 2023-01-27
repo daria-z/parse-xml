@@ -21,8 +21,10 @@ public class FoodsAdapter extends ArrayAdapter<Food> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_dish, parent, false);
         }
         TextView foodNameView = convertView.findViewById(R.id.foodName);
+        TextView caloriesView = convertView.findViewById(R.id.foodCalories);
         TextView priceView = convertView.findViewById(R.id.foodPrice);
         foodNameView.setText(food.getName());
+        caloriesView.setText(food.getCalories());
         priceView.setText(food.getPrice());
         return convertView;
     }

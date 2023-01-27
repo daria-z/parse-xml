@@ -8,7 +8,6 @@ public class Food {
     private String calories;
 
 
-
     public String getName() {
         return name;
     }
@@ -22,7 +21,9 @@ public class Food {
     }
 
     public void setPrice(String price) {
-        this.price = price;
+        String clear_price = price.substring(1);
+        Float result_price = Float.parseFloat(clear_price) + 20;
+        this.price = String.valueOf(result_price);
     }
 
     public String getCalories() {
@@ -30,6 +31,6 @@ public class Food {
     }
 
     public void setCalories(String calories) {
-        this.calories = calories;
+        this.calories = String.valueOf(Integer.parseInt(calories) + 1);
     }
 }
