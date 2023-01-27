@@ -12,6 +12,9 @@
         android:theme="@style/Theme.ParseXML"
         tools:targetApi="31">
         <activity
+            android:name=".FoodDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".row_dish"
             android:exported="false" />
         <activity
