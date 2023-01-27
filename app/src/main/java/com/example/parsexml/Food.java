@@ -3,10 +3,19 @@ package com.example.parsexml;
 // класс для всей информации о блюде
 
 public class Food {
+    private String id;
+
     private String name;
     private String price;
     private String calories;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

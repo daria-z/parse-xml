@@ -1,4 +1,6 @@
 package com.example.parsexml;
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class FoodXmlParser {
         Food curFood = null;
         // временное хронилище  для текста пока мы его парсим
         String curText = "";
+        String curId = "";
 
         try {
             int eventType = xpp.getEventType();
@@ -35,6 +38,9 @@ public class FoodXmlParser {
                     case XmlPullParser.START_TAG:
                         if (tagname.equalsIgnoreCase(KEY_FOOD)) {
                             curFood = new Food();
+                        }
+                        if (tagname.equalsIgnoreCase(KEY_NAME)) {
+                            curFood.setId(xpp.getAttributeValue(0));
                         }
                         break;
 
