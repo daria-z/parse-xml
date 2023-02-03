@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Parse XML</string>
-    <string name="file_read_error">Не удалось загрузить данные</string>
+    <string name="file_read_error">Error</string>
 </resources>

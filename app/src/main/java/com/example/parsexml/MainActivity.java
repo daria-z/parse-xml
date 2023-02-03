@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         XmlPullParser xpp = getResources().getXml(R.xml.foods);
         FoodXmlParser foodParser = new FoodXmlParser(xpp);
-        foodsList = FoodXmlParser.getFood();
+        foodsList = FoodXmlParser.getFoodList();
 
         FoodsAdapter adapter = new FoodsAdapter(this, foodsList);
         ListView listView = findViewById(R.id.food_list);
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Food selectedFood = foodsList.get(position);
         SharedPreferences storedData = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor storedDataEditor = storedData.edit();
-        storedDataEditor.putString("id", selectedFood.getId());
+        storedDataEditor.putInt("id", selectedFood.getId());
         storedDataEditor.commit();
         Intent intent = new Intent(this, FoodDetailsActivity.class);
 //        intent.putExtra(Intent.EXTRA_TEXT, selectedFood.getId());
@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-// рефактор текущего кода (int, переменные)
-// парсим только когда у food находится нужный id
-// выводим в тексовые поля вьюшки поля классов
-// bonus:
-// вытащить информацию через Intent.EXTRA_TEXT
+// привести приложение в порядок И всё отрисовать и высожить
+// отдельное приложение с extra text
+// приложение с локализацией (маленькое)
+// прочесть

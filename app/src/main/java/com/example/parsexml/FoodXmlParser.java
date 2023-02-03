@@ -17,12 +17,13 @@ public class FoodXmlParser {
         FoodXmlParser.xpp = xpp;
     }
 
-    public static ArrayList<Food> getFood() {
+    public static ArrayList<Food> getFoodList() {
         ArrayList<Food> foods;
         foods = new ArrayList<>();
 
         Food curFood = null;
         String curText = "";
+
 
         try {
             int eventType = xpp.getEventType();
@@ -33,7 +34,7 @@ public class FoodXmlParser {
                     case XmlPullParser.START_TAG:
                         if (tagname.equalsIgnoreCase(KEY_FOOD)) {
                             curFood = new Food();
-                            curFood.setId(xpp.getAttributeValue(0));
+                            curFood.setId(Integer.parseInt(xpp.getAttributeValue(0)));
                         }
                         break;
 
@@ -47,7 +48,7 @@ public class FoodXmlParser {
                         } else if (tagname.equalsIgnoreCase(KEY_NAME)) {
                             curFood.setName(curText);
                         } else if (tagname.equalsIgnoreCase(KEY_CALORIES)) {
-                            curFood.setCalories(curText);
+                            curFood.setCalories(Integer.parseInt(curText));
                         } else if (tagname.equalsIgnoreCase(KEY_COAST)) {
                             curFood.setPrice(curText);
                         }
@@ -68,10 +69,54 @@ public class FoodXmlParser {
 
     }
 
-//    public Food getFood(String id) {
-//        return currentFood;
-//        // парсим только когда у food находится нужный id
-//    };
+    public Food getFood(int id) {
+        Food currentFood = new Food();
+        String curText = "";
+        String currentId  = "";
+        Boolean isFood = false;
+
+        try {
+            int eventType = xpp.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                String tagname = xpp.getName();
+
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        if (tagname.equalsIgnoreCase(KEY_FOOD)) {
+
+                            if (String.valueOf(id).equals(xpp.getAttributeValue(0))) {
+                                isFood = true;
+                            } else {
+                                isFood = false;
+                            };
+                        }
+                    break;
+
+                    case XmlPullParser.TEXT:
+                        curText = xpp.getText();
+                    break;
+
+                    case XmlPullParser.END_TAG:
+                        if (tagname.equalsIgnoreCase(KEY_NAME) && isFood) {
+                            currentFood.setName(curText);
+                        } else if (tagname.equalsIgnoreCase(KEY_CALORIES) && isFood) {
+                            currentFood.setCalories(Integer.parseInt(curText));
+                        } else if (tagname.equalsIgnoreCase(KEY_COAST) && isFood) {
+                            currentFood.setPrice(curText);
+                        }
+                    break;
+
+                }
+                eventType = xpp.next();
+            }
+
+        } catch (XmlPullParserException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return currentFood;
+        // парсим только когда у food находится нужный id
+    };
 }
 
 //    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();

@@ -2,8 +2,14 @@ package com.example.parsexml;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
+import org.xmlpull.v1.XmlPullParser;
 
 public class FoodDetailsActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "SharedPrefsFile";
@@ -13,10 +19,18 @@ public class FoodDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_details);
         SharedPreferences storedData = getSharedPreferences(PREFS_NAME, 0);
-        String foodId = storedData.getString("id", null);
-
+        int foodId = storedData.getInt("id", 0);
+        XmlPullParser xpp = getResources().getXml(R.xml.foods);
+        FoodXmlParser foodParser = new FoodXmlParser(xpp);
 //        Food currentFood = foodParser.getFood(foodId);
+        TextView name = (TextView) findViewById(R.id.foodName);
+        name.setText(foodParser.getFood(foodId).getName());
         //выводим в тексовые поля вьюшки поля классов
 
+    }
+
+    public void goBack(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
