@@ -46,12 +46,6 @@ public class MainActivity extends AppCompatActivity {
         storedDataEditor.putInt("id", selectedFood.getId());
         storedDataEditor.commit();
         Intent intent = new Intent(this, FoodDetailsActivity.class);
-//        intent.putExtra(Intent.EXTRA_TEXT, selectedFood.getId());
         startActivity(intent);
     }
 }
-
-// привести приложение в порядок И всё отрисовать и высожить
-// отдельное приложение с extra text
-// приложение с локализацией (маленькое)
-// прочесть

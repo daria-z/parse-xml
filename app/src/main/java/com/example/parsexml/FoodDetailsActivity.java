@@ -21,11 +21,18 @@ public class FoodDetailsActivity extends AppCompatActivity {
         SharedPreferences storedData = getSharedPreferences(PREFS_NAME, 0);
         int foodId = storedData.getInt("id", 0);
         XmlPullParser xpp = getResources().getXml(R.xml.foods);
+
         FoodXmlParser foodParser = new FoodXmlParser(xpp);
-//        Food currentFood = foodParser.getFood(foodId);
+        Food currentFood = foodParser.getFood(foodId);
+
         TextView name = (TextView) findViewById(R.id.foodName);
-        name.setText(foodParser.getFood(foodId).getName());
-        //выводим в тексовые поля вьюшки поля классов
+        name.setText(currentFood.getName());
+
+        TextView calories = (TextView) findViewById(R.id.foodCalories);
+        calories.setText(String.valueOf(currentFood.getCalories()));
+
+        TextView price = (TextView) findViewById(R.id.foodPrice);
+        price.setText(currentFood.getPrice());
 
     }
 

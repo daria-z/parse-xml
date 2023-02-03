@@ -30,9 +30,7 @@ public class Food {
     }
 
     public void setPrice(String price) {
-        String clear_price = price.substring(1);
-        Float result_price = Float.parseFloat(clear_price) + 20;
-        this.price = String.valueOf(result_price);
+        this.price = price;
     }
 
     public int getCalories() {

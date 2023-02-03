@@ -21,8 +21,8 @@ public class FoodXmlParser {
         ArrayList<Food> foods;
         foods = new ArrayList<>();
 
-        Food curFood = null;
-        String curText = "";
+        Food currentFood = null;
+        String currentText = "";
 
 
         try {
@@ -33,24 +33,24 @@ public class FoodXmlParser {
                 switch (eventType) {
                     case XmlPullParser.START_TAG:
                         if (tagname.equalsIgnoreCase(KEY_FOOD)) {
-                            curFood = new Food();
-                            curFood.setId(Integer.parseInt(xpp.getAttributeValue(0)));
+                            currentFood = new Food();
+                            currentFood.setId(Integer.parseInt(xpp.getAttributeValue(0)));
                         }
                         break;
 
                     case XmlPullParser.TEXT:
-                        curText = xpp.getText();
+                        currentText = xpp.getText();
                         break;
 
                     case XmlPullParser.END_TAG:
                         if (tagname.equalsIgnoreCase(KEY_FOOD)) {
-                            foods.add(curFood);
+                            foods.add(currentFood);
                         } else if (tagname.equalsIgnoreCase(KEY_NAME)) {
-                            curFood.setName(curText);
+                            currentFood.setName(currentText);
                         } else if (tagname.equalsIgnoreCase(KEY_CALORIES)) {
-                            curFood.setCalories(Integer.parseInt(curText));
+                            currentFood.setCalories(Integer.parseInt(currentText));
                         } else if (tagname.equalsIgnoreCase(KEY_COAST)) {
-                            curFood.setPrice(curText);
+                            currentFood.setPrice(currentText);
                         }
                         break;
 
@@ -71,9 +71,8 @@ public class FoodXmlParser {
 
     public Food getFood(int id) {
         Food currentFood = new Food();
-        String curText = "";
-        String currentId  = "";
-        Boolean isFood = false;
+        String currentText = "";
+        Boolean isFoodRight = false;
 
         try {
             int eventType = xpp.getEventType();
@@ -85,24 +84,24 @@ public class FoodXmlParser {
                         if (tagname.equalsIgnoreCase(KEY_FOOD)) {
 
                             if (String.valueOf(id).equals(xpp.getAttributeValue(0))) {
-                                isFood = true;
+                                isFoodRight = true;
                             } else {
-                                isFood = false;
+                                isFoodRight = false;
                             };
                         }
                     break;
 
                     case XmlPullParser.TEXT:
-                        curText = xpp.getText();
+                        currentText = xpp.getText();
                     break;
 
                     case XmlPullParser.END_TAG:
-                        if (tagname.equalsIgnoreCase(KEY_NAME) && isFood) {
-                            currentFood.setName(curText);
-                        } else if (tagname.equalsIgnoreCase(KEY_CALORIES) && isFood) {
-                            currentFood.setCalories(Integer.parseInt(curText));
-                        } else if (tagname.equalsIgnoreCase(KEY_COAST) && isFood) {
-                            currentFood.setPrice(curText);
+                        if (tagname.equalsIgnoreCase(KEY_NAME) && isFoodRight) {
+                            currentFood.setName(currentText);
+                        } else if (tagname.equalsIgnoreCase(KEY_CALORIES) && isFoodRight) {
+                            currentFood.setCalories(Integer.parseInt(currentText));
+                        } else if (tagname.equalsIgnoreCase(KEY_COAST) && isFoodRight) {
+                            currentFood.setPrice(currentText);
                         }
                     break;
 
@@ -115,9 +114,5 @@ public class FoodXmlParser {
         }
 
         return currentFood;
-        // парсим только когда у food находится нужный id
     };
 }
-
-//    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-//            XmlPullParser xpp = factory.newPullParser();
